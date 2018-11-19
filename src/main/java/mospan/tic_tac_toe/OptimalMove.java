@@ -15,6 +15,14 @@ public final class OptimalMove {
         return score;
     }
 
+    int getRowIdx() {
+        return rowIdx;
+    }
+
+    int getColumnIdx() {
+        return columnIdx;
+    }
+
     @Override
     public String toString() {
         return "OptimalMove{" +

@@ -16,9 +16,9 @@ public class Board {
 
     Board(Player currentPlayer) {
         this.board = new CellValue[][]{
-                {CROSS, NAUGHT, CROSS},
-                {CROSS, NAUGHT, CROSS},
-                {NAUGHT, EMPTY, EMPTY}
+                {EMPTY, EMPTY, EMPTY},
+                {EMPTY, EMPTY, EMPTY},
+                {EMPTY, EMPTY, EMPTY}
         };
         this.currentPlayer = currentPlayer;
         this.currentPlayerValue = CROSS;
@@ -111,4 +111,8 @@ public class Board {
         return resultBuilder.toString();
     }
 
+
+    void setBoard(CellValue[][] board) {
+        this.board = board;
+    }
 }
