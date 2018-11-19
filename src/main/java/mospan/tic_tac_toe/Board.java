@@ -16,9 +16,9 @@ public class Board {
 
     Board(Player currentPlayer) {
         this.board = new CellValue[][]{
-                {NAUGHT, EMPTY, CROSS},
-                {CROSS, EMPTY, EMPTY},
-                {CROSS, NAUGHT, NAUGHT}
+                {CROSS, NAUGHT, CROSS},
+                {CROSS, NAUGHT, CROSS},
+                {NAUGHT, EMPTY, EMPTY}
         };
         this.currentPlayer = currentPlayer;
         this.currentPlayerValue = CROSS;
@@ -26,7 +26,7 @@ public class Board {
         this.opponentPlayerValue = NAUGHT;
     }
 
-    private void switchPlayers() {
+    void switchPlayers() {
         Player tempPlayer = currentPlayer;
         currentPlayer = opponentPlayer;
         opponentPlayer = tempPlayer;
@@ -37,15 +37,16 @@ public class Board {
 
     OptimalMove makeNextMove() {
 
-        Player opponentWinner = getWinnerAfterOpponentMove();
+        Player opponentWinner = getOpponentWinnerOrNull();
 
         if (opponentWinner != null) {
-            return new OptimalMove(-1, -1, -1);
+            switchPlayers();
+            return new OptimalMove(-1, -1, opponentWinner.getWeight());
         }
 
-        int score = HUMAN.getWeight() - 1;      //make score the lowest value
+        int score = 0;
+        boolean firstComparison = true;
         int scoreForNextMove;
-        OptimalMove nextOptimalMove;
         OptimalMove optimalMove = new OptimalMove(-1, -1, 0);
 
         for (int rowIdx = 0; rowIdx < BOARD_LENGTH; rowIdx++) {
@@ -53,21 +54,24 @@ public class Board {
                 if (board[rowIdx][columnIdx] == EMPTY) {
                     board[rowIdx][columnIdx] = currentPlayerValue;
                     switchPlayers();
-                    nextOptimalMove = makeNextMove();
-                    scoreForNextMove = -nextOptimalMove.getScore();
-                    if (scoreForNextMove > score) {
+                    scoreForNextMove = makeNextMove().getScore();
+                    if ((scoreForNextMove > score && currentPlayer == COMPUTER)
+                            || (scoreForNextMove < score && currentPlayer == HUMAN)
+                            || firstComparison) {
+                        firstComparison = false;
                         score = scoreForNextMove;
                         optimalMove = new OptimalMove(rowIdx, columnIdx, score);
                     }
                     board[rowIdx][columnIdx] = EMPTY;
-                    switchPlayers();
                 }
             }
         }
+
+        switchPlayers();
         return optimalMove;
     }
 
-    private Player getWinnerAfterOpponentMove() {
+    private Player getOpponentWinnerOrNull() {
         if ((board[0][0] == opponentPlayerValue && board[0][1] == opponentPlayerValue && board[0][2] == opponentPlayerValue) ||
                 (board[1][0] == opponentPlayerValue && board[1][1] == opponentPlayerValue && board[1][2] == opponentPlayerValue) ||
                 (board[2][0] == opponentPlayerValue && board[2][1] == opponentPlayerValue && board[2][2] == opponentPlayerValue) ||
