@@ -1,16 +1,19 @@
 package mospan.tic_tac_toe;
 
-public enum Player {
-    HUMAN(-1),
-    COMPUTER(1);
+final class Player {
+    private final PlayerName playerName;
+    private final CellValue playerValue;
 
-    private int weight;
-
-    Player(int weight) {
-        this.weight = weight;
+    Player(PlayerName playerName, CellValue playerValue) {
+        this.playerName = playerName;
+        this.playerValue = playerValue;
     }
 
-    public int getWeight() {
-        return weight;
+    PlayerName getPlayerName() {
+        return playerName;
+    }
+
+    CellValue getPlayerValue() {
+        return playerValue;
     }
 }
