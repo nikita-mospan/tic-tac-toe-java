@@ -13,28 +13,28 @@ public class GameTest {
 
     @Test
     public void finishGame1 () {
-        Board board = new Board(HUMAN);
-        board.setBoard(new CellValue[][]{
+        GameState gameState = new GameState(HUMAN);
+        gameState.setBoard(new CellValue[][]{
                 {CROSS, CROSS, NAUGHT},
                 {CROSS, CROSS, NAUGHT},
                 {NAUGHT, EMPTY, EMPTY}
         });
-        board.switchPlayers();
-        final OptimalMove optimalMove = board.makeNextMove();
+        gameState.switchPlayers();
+        final OptimalMove optimalMove = gameState.makeNextMove();
         assertEquals(2, optimalMove.getRowIdx());
         assertEquals(2, optimalMove.getColumnIdx());
     }
 
     @Test
     public void preventLoss1 () {
-        Board board = new Board(HUMAN);
-        board.setBoard(new CellValue[][]{
+        GameState gameState = new GameState(HUMAN);
+        gameState.setBoard(new CellValue[][]{
                 {CROSS, EMPTY, EMPTY},
                 {EMPTY, EMPTY, EMPTY},
                 {EMPTY, EMPTY, EMPTY}
         });
-        board.switchPlayers();
-        final OptimalMove optimalMove = board.makeNextMove();
+        gameState.switchPlayers();
+        final OptimalMove optimalMove = gameState.makeNextMove();
         assertEquals(1, optimalMove.getRowIdx());
         assertEquals(1, optimalMove.getColumnIdx());
     }

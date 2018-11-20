@@ -5,8 +5,7 @@ import static mospan.tic_tac_toe.Player.HUMAN;
 
 public class GameMain {
     public static void main(String[] args) {
-        Board board = new Board(HUMAN);
-        board.switchPlayers();
-        System.out.println(board.makeNextMove());
+        GameState gameState = new GameState(COMPUTER);
+        System.out.println(gameState.makeNextMove());
     }
 }

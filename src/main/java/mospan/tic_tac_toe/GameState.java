@@ -6,7 +6,7 @@ import static mospan.tic_tac_toe.CellValue.NAUGHT;
 import static mospan.tic_tac_toe.Player.COMPUTER;
 import static mospan.tic_tac_toe.Player.HUMAN;
 
-public class Board {
+public class GameState {
     private CellValue board[][];
     private Player currentPlayer;
     private Player opponentPlayer;
@@ -14,7 +14,7 @@ public class Board {
     private CellValue opponentPlayerValue;
     private static final int BOARD_LENGTH = 3;
 
-    Board(Player currentPlayer) {
+    GameState(Player currentPlayer) {
         this.board = new CellValue[][]{
                 {EMPTY, EMPTY, EMPTY},
                 {EMPTY, EMPTY, EMPTY},
