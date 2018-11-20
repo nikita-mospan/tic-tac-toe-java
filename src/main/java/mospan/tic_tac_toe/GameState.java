@@ -3,6 +3,8 @@ package mospan.tic_tac_toe;
 import static mospan.tic_tac_toe.CellValue.CROSS;
 import static mospan.tic_tac_toe.CellValue.EMPTY;
 import static mospan.tic_tac_toe.CellValue.NAUGHT;
+import static mospan.tic_tac_toe.GameEndStatus.COMPUTER_WON;
+import static mospan.tic_tac_toe.GameEndStatus.DRAW;
 import static mospan.tic_tac_toe.PlayerName.COMPUTER;
 import static mospan.tic_tac_toe.PlayerName.HUMAN;
 
@@ -23,13 +25,17 @@ public class GameState {
         opponentPlayer = new Player(currentPlayerName == HUMAN ? COMPUTER : HUMAN, NAUGHT);
     }
 
+    Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
     void switchPlayers() {
         Player tempPlayer = currentPlayer;
         currentPlayer = opponentPlayer;
         opponentPlayer = tempPlayer;
     }
 
-    OptimalMove makeNextMove() {
+    OptimalMove calculateNextMove() {
 
         Player opponentWinner = getOpponentWinnerOrNull();
 
@@ -48,7 +54,7 @@ public class GameState {
                 if (board[rowIdx][columnIdx] == EMPTY) {
                     board[rowIdx][columnIdx] = currentPlayer.getPlayerValue();
                     switchPlayers();
-                    scoreForNextMove = makeNextMove().getScore();
+                    scoreForNextMove = calculateNextMove().getScore();
                     if ((scoreForNextMove > score && currentPlayer.getPlayerName() == COMPUTER)
                             || (scoreForNextMove < score && currentPlayer.getPlayerName() == HUMAN)
                             || firstComparison) {
@@ -63,6 +69,12 @@ public class GameState {
 
         switchPlayers();
         return optimalMove;
+    }
+
+    void makeNextMove() {
+        final OptimalMove optimalMove = calculateNextMove();
+        switchPlayers();
+        updateBoard(optimalMove.getRowIdx(), optimalMove.getColumnIdx());
     }
 
     private Player getOpponentWinnerOrNull() {
@@ -84,7 +96,7 @@ public class GameState {
     @Override
     public String toString() {
         StringBuilder resultBuilder = new StringBuilder();
-        resultBuilder.append(opponentPlayer);
+        resultBuilder.append(opponentPlayer.getPlayerName());
         resultBuilder.append("\n");
         for (CellValue[] row : board) {
             for (CellValue cell : row) {
@@ -106,8 +118,33 @@ public class GameState {
         return resultBuilder.toString();
     }
 
-
     void setBoard(CellValue[][] board) {
         this.board = board;
+    }
+
+    GameEndStatus getGameEndStatusOrNull() {
+        if (currentPlayer.getPlayerName() == HUMAN && getOpponentWinnerOrNull() != null) {
+            return COMPUTER_WON;
+        } else {
+            for (int rowIdx = 0; rowIdx < BOARD_LENGTH; rowIdx++) {
+                for (int columnIdx = 0; columnIdx < BOARD_LENGTH; columnIdx++) {
+                    if (board[rowIdx][columnIdx] == EMPTY) {
+                        return null;
+                    }
+                }
+            }
+        }
+        return DRAW;
+    }
+
+    void updateBoard (int rowIdx, int columnIdx) {
+        if (rowIdx < 0 || rowIdx >= BOARD_LENGTH || columnIdx < 0 || columnIdx >= BOARD_LENGTH) {
+            throw new IllegalStateException(String.format("RowIdx: %d, ColumnIdx: %d are out of range!", rowIdx, columnIdx));
+        } else if (board[rowIdx][columnIdx] != EMPTY) {
+            throw new IllegalStateException("Attempt to update non-empty field!");
+        } else {
+            board[rowIdx][columnIdx] = currentPlayer.getPlayerValue();
+            switchPlayers();
+        }
     }
 }

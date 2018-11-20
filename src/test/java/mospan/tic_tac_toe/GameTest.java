@@ -20,7 +20,7 @@ public class GameTest {
                 {NAUGHT, EMPTY, EMPTY}
         });
         gameState.switchPlayers();
-        final OptimalMove optimalMove = gameState.makeNextMove();
+        final OptimalMove optimalMove = gameState.calculateNextMove();
         assertEquals(2, optimalMove.getRowIdx());
         assertEquals(2, optimalMove.getColumnIdx());
     }
@@ -34,7 +34,7 @@ public class GameTest {
                 {EMPTY, EMPTY, EMPTY}
         });
         gameState.switchPlayers();
-        final OptimalMove optimalMove = gameState.makeNextMove();
+        final OptimalMove optimalMove = gameState.calculateNextMove();
         assertEquals(1, optimalMove.getRowIdx());
         assertEquals(1, optimalMove.getColumnIdx());
     }
