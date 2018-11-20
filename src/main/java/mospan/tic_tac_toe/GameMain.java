@@ -1,7 +1,7 @@
 package mospan.tic_tac_toe;
 
-import static mospan.tic_tac_toe.Player.COMPUTER;
-import static mospan.tic_tac_toe.Player.HUMAN;
+import static mospan.tic_tac_toe.PlayerName.COMPUTER;
+import static mospan.tic_tac_toe.PlayerName.HUMAN;
 
 public class GameMain {
     public static void main(String[] args) {

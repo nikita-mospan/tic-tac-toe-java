@@ -3,36 +3,30 @@ package mospan.tic_tac_toe;
 import static mospan.tic_tac_toe.CellValue.CROSS;
 import static mospan.tic_tac_toe.CellValue.EMPTY;
 import static mospan.tic_tac_toe.CellValue.NAUGHT;
-import static mospan.tic_tac_toe.Player.COMPUTER;
-import static mospan.tic_tac_toe.Player.HUMAN;
+import static mospan.tic_tac_toe.PlayerName.COMPUTER;
+import static mospan.tic_tac_toe.PlayerName.HUMAN;
 
 public class GameState {
     private CellValue board[][];
     private Player currentPlayer;
     private Player opponentPlayer;
-    private CellValue currentPlayerValue;
-    private CellValue opponentPlayerValue;
     private static final int BOARD_LENGTH = 3;
 
-    GameState(Player currentPlayer) {
+    GameState(PlayerName currentPlayerName) {
         this.board = new CellValue[][]{
                 {EMPTY, EMPTY, EMPTY},
                 {EMPTY, EMPTY, EMPTY},
                 {EMPTY, EMPTY, EMPTY}
         };
-        this.currentPlayer = currentPlayer;
-        this.currentPlayerValue = CROSS;
-        this.opponentPlayer = currentPlayer == HUMAN ? COMPUTER : HUMAN;
-        this.opponentPlayerValue = NAUGHT;
+
+        currentPlayer = new Player(currentPlayerName, CROSS);
+        opponentPlayer = new Player(currentPlayerName == HUMAN ? COMPUTER : HUMAN, NAUGHT);
     }
 
     void switchPlayers() {
         Player tempPlayer = currentPlayer;
         currentPlayer = opponentPlayer;
         opponentPlayer = tempPlayer;
-        CellValue tempCellValue = currentPlayerValue;
-        currentPlayerValue = opponentPlayerValue;
-        opponentPlayerValue = tempCellValue;
     }
 
     OptimalMove makeNextMove() {
@@ -41,7 +35,7 @@ public class GameState {
 
         if (opponentWinner != null) {
             switchPlayers();
-            return new OptimalMove(-1, -1, opponentWinner.getWeight());
+            return new OptimalMove(-1, -1, opponentWinner.getPlayerName().getScore());
         }
 
         int score = 0;
@@ -52,11 +46,11 @@ public class GameState {
         for (int rowIdx = 0; rowIdx < BOARD_LENGTH; rowIdx++) {
             for (int columnIdx = 0; columnIdx < BOARD_LENGTH; columnIdx++) {
                 if (board[rowIdx][columnIdx] == EMPTY) {
-                    board[rowIdx][columnIdx] = currentPlayerValue;
+                    board[rowIdx][columnIdx] = currentPlayer.getPlayerValue();
                     switchPlayers();
                     scoreForNextMove = makeNextMove().getScore();
-                    if ((scoreForNextMove > score && currentPlayer == COMPUTER)
-                            || (scoreForNextMove < score && currentPlayer == HUMAN)
+                    if ((scoreForNextMove > score && currentPlayer.getPlayerName() == COMPUTER)
+                            || (scoreForNextMove < score && currentPlayer.getPlayerName() == HUMAN)
                             || firstComparison) {
                         firstComparison = false;
                         score = scoreForNextMove;
@@ -72,6 +66,7 @@ public class GameState {
     }
 
     private Player getOpponentWinnerOrNull() {
+        CellValue opponentPlayerValue = opponentPlayer.getPlayerValue();
         if ((board[0][0] == opponentPlayerValue && board[0][1] == opponentPlayerValue && board[0][2] == opponentPlayerValue) ||
                 (board[1][0] == opponentPlayerValue && board[1][1] == opponentPlayerValue && board[1][2] == opponentPlayerValue) ||
                 (board[2][0] == opponentPlayerValue && board[2][1] == opponentPlayerValue && board[2][2] == opponentPlayerValue) ||

@@ -5,7 +5,7 @@ import org.junit.Test;
 import static mospan.tic_tac_toe.CellValue.CROSS;
 import static mospan.tic_tac_toe.CellValue.EMPTY;
 import static mospan.tic_tac_toe.CellValue.NAUGHT;
-import static mospan.tic_tac_toe.Player.HUMAN;
+import static mospan.tic_tac_toe.PlayerName.HUMAN;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
