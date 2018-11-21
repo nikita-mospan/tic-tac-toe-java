@@ -1,5 +1,6 @@
 package mospan.tic_tac_toe;
 
+import java.util.Arrays;
 import static mospan.tic_tac_toe.CellValue.CROSS;
 import static mospan.tic_tac_toe.CellValue.EMPTY;
 import static mospan.tic_tac_toe.CellValue.NAUGHT;
@@ -99,19 +100,7 @@ public class GameState {
         resultBuilder.append(opponentPlayer.getPlayerName());
         resultBuilder.append("\n");
         for (CellValue[] row : board) {
-            for (CellValue cell : row) {
-                switch (cell) {
-                    case EMPTY:
-                        resultBuilder.append("* ");
-                        break;
-                    case CROSS:
-                        resultBuilder.append("X ");
-                        break;
-                    case NAUGHT:
-                        resultBuilder.append("0 ");
-                        break;
-                }
-            }
+            Arrays.stream(row).forEach(resultBuilder::append);
             resultBuilder.append("\n");
         }
         resultBuilder.append("------------------------------");

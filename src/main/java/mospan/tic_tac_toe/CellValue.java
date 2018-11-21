@@ -1,7 +1,18 @@
 package mospan.tic_tac_toe;
 
 public enum CellValue {
-    CROSS,
-    EMPTY,
-    NAUGHT
+    CROSS("X "),
+    EMPTY("* "),
+    NAUGHT("0 ");
+
+    private String value;
+
+    CellValue(String value) {
+        this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
 }
