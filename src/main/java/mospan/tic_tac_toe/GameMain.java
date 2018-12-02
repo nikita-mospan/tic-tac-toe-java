@@ -9,7 +9,7 @@ import static mospan.tic_tac_toe.PlayerName.HUMAN;
 
 public class GameMain {
     public static void main(String[] args) {
-        GameState gameState = new GameState(HUMAN);
+        GameState gameState = new GameState(COMPUTER);
         Scanner scanner = new Scanner(System.in);
         int rowIdx ;
         int columnIdx;
@@ -22,9 +22,12 @@ public class GameMain {
                     gameState.makeNextMove();
                     System.out.println(gameState);
                 }
-            } else {
+            } else {    //HUMAN
                 if (gameState.getGameEndStatusOrNull() == COMPUTER_WON) {
                     System.out.println("Computer WON! End of game!");
+                    break;
+                } else if (gameState.getGameEndStatusOrNull() == DRAW) {
+                    System.out.println("It is DRAW! End of game!");
                     break;
                 } else {
                     while (true) {
