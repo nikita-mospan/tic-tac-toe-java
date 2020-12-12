@@ -5,7 +5,6 @@ import java.util.Scanner;
 import static mospan.tic_tac_toe.GameEndStatus.COMPUTER_WON;
 import static mospan.tic_tac_toe.GameEndStatus.DRAW;
 import static mospan.tic_tac_toe.PlayerName.COMPUTER;
-import static mospan.tic_tac_toe.PlayerName.HUMAN;
 
 public class GameMain {
     public static void main(String[] args) {

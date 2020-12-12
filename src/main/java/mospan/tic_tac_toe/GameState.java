@@ -10,7 +10,7 @@ import static mospan.tic_tac_toe.PlayerName.COMPUTER;
 import static mospan.tic_tac_toe.PlayerName.HUMAN;
 
 public class GameState {
-    private CellValue board[][];
+    private CellValue[][] board;
     private Player currentPlayer;
     private Player opponentPlayer;
     private static final int BOARD_LENGTH = 3;

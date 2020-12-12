@@ -1,9 +1,9 @@
 package mospan.tic_tac_toe;
 
 public final class OptimalMove {
-    private int rowIdx;
-    private int columnIdx;
-    private int score;
+    private final int rowIdx;
+    private final int columnIdx;
+    private final int score;
 
     OptimalMove(int rowIdx, int columnIdx, int score) {
         this.rowIdx = rowIdx;

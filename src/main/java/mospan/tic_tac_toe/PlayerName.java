@@ -4,7 +4,7 @@ public enum PlayerName {
     HUMAN(-1),
     COMPUTER(1);
 
-    private int score;
+    private final int score;
 
     PlayerName(int score) {
         this.score = score;

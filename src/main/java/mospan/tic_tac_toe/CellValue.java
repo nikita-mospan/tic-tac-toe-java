@@ -5,7 +5,7 @@ public enum CellValue {
     EMPTY("* "),
     NAUGHT("0 ");
 
-    private String value;
+    private final String value;
 
     CellValue(String value) {
         this.value = value;
